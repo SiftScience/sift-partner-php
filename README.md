@@ -1,4 +1,4 @@
-# Sift Science PHP Bindings
+# Sift Science PHP Bindings For Partnership API
 
 ## Installation
 ### With Composer
