@@ -24,7 +24,7 @@
 
 ### Manually
 1. Download the latest release.
-2. Extract into a folder in your project root named "sift-php".
+2. Extract into a folder in your project root named "sift-partner-php".
 2. Include `SiftClient` in your project like this:
 
     ```
