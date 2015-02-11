@@ -1,5 +1,9 @@
+<<<<<<< HEAD
 # Sift Science PHP Bindings <a href="https://travis-ci.org/SiftScience/sift-partner-php"><img src="https://travis-ci.org/SiftScience/sift-partner-php.svg?branch=master">
 
+=======
+# Sift Science PHP Bindings For Partnership API
+>>>>>>> master
 
 ## Installation
 ### With Composer
@@ -25,7 +29,7 @@
 
 ### Manually
 1. Download the latest release.
-2. Extract into a folder in your project root named "sift-php".
+2. Extract into a folder in your project root named "sift-partner-php".
 2. Include `SiftClient` in your project like this:
 
     ```
