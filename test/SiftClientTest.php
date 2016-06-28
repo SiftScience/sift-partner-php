@@ -185,7 +185,7 @@ class SiftClientTest extends PHPUnit_Framework_TestCase {
                   )
                 ),
                 "has_more"=> False,
-                "total_results"=> 1,
+                "total_results"=> 2,
                 "type"=> "partner_account"
               ));
     }
@@ -318,7 +318,7 @@ class SiftClientTest extends PHPUnit_Framework_TestCase {
         $this->assertTrue(array_key_exists('has_more', $response->body));
         $this->assertFalse($response->body['has_more']);
         $this->assertTrue(array_key_exists('total_results', $response->body));
-        $this->assertEquals($response->body['total_results'], 1);
+        $this->assertEquals($response->body['total_results'], 2);
         $this->assertTrue(array_key_exists('data', $response->body));
         $this->assertEquals(count($response->body['data']), 1);
     }
