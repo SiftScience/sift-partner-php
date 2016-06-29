@@ -98,7 +98,7 @@ class SiftClientTest extends PHPUnit_Framework_TestCase {
         
         
 
-    private function validGetAccountsListResponseJson() {
+    private function validGetAccountsFirstListResponseJson() {
         return json_encode(array(
                 "data"=> array(
                   array(
@@ -136,6 +136,18 @@ class SiftClientTest extends PHPUnit_Framework_TestCase {
                       )
                     )
                   ),
+                ),
+                "has_more"=> True,
+                "total_results"=> 2,
+                "next_ref" => 'https://partner.siftscience.com/v3/partners/' . SiftClientTest::$PARTNER_ID . '/accounts' .
+                              '?after=54125bfee4b0beea0dfebfba',
+                "type"=> "partner_account"
+              ));
+    }
+
+        private function validGetAccountsSecondListResponseJson() {
+        return json_encode(array(
+                "data"=> array(
                   array(
                     "account_id"=> "541793ece4b0550b2274a8ed",
                     "production"=> array(
@@ -285,16 +297,30 @@ class SiftClientTest extends PHPUnit_Framework_TestCase {
 
     public function testSuccessfulGetAccounts() {
         $mockUrl = 'https://partner.siftscience.com/v3/partners/' . SiftClientTest::$PARTNER_ID . '/accounts';
-        $mockResponse = new SiftResponse($this->validGetAccountsListResponseJson(), 200, null);
-        SiftRequest::setMockResponse($mockUrl, SiftRequest::GET ,$mockResponse);
+        $mockResponse = new SiftResponse($this->validGetAccountsFirstListResponseJson(), 200, null);
+        SiftRequest::setMockResponse($mockUrl, SiftRequest::GET, $mockResponse);
         $response = $this->client->getAccounts();
+        $this->assertTrue($response->isOk());
+        $this->assertTrue(array_key_exists('has_more', $response->body));
+        $this->assertTrue($response->body['has_more']);
+        $this->assertTrue(array_key_exists('total_results', $response->body));
+        $this->assertEquals($response->body['total_results'], 2);
+        $this->assertTrue(array_key_exists('data', $response->body));
+        $this->assertEquals(count($response->body['data']), 1);
+        $this->assertTrue(array_key_exists('next_ref', $response->body));
+        $nextRef = $response->body['next_ref'];
+
+        $mockUrl = $nextRef;
+        $mockResponse = new SiftResponse($this->validGetAccountsSecondListResponseJson(), 200, null);
+        SiftRequest::setMockResponse($mockUrl, SiftRequest::GET, $mockResponse);
+        $response = $this->client->getAccounts($nextRef);
         $this->assertTrue($response->isOk());
         $this->assertTrue(array_key_exists('has_more', $response->body));
         $this->assertFalse($response->body['has_more']);
         $this->assertTrue(array_key_exists('total_results', $response->body));
         $this->assertEquals($response->body['total_results'], 2);
         $this->assertTrue(array_key_exists('data', $response->body));
-        $this->assertEquals(count($response->body['data']), 2);
+        $this->assertEquals(count($response->body['data']), 1);
     }
 
     public function testSuccessfulUpdateNotificationConfig() {

@@ -3,6 +3,7 @@
 class SiftClient {
     const API_ENDPOINT = 'https://partner.siftscience.com/v';
 
+
     // Must be kept in sync with composer.json
     const API_VERSION = '3';
     const DEFAULT_TIMEOUT = 2;
@@ -73,9 +74,10 @@ class SiftClient {
         }
     }
 
-    public function getAccounts() {
+    public function getAccounts($nextRef = null) {
         try {
-            $request = new SiftRequest(self::accountsUrl(), SiftRequest::GET, null, $this->apiKey, $this->timeout);
+            $request = new SiftRequest(is_null($nextRef) ? self::accountsUrl() : $nextRef, 
+                SiftRequest::GET, null, $this->apiKey, $this->timeout);
             return $request->send();
         } catch (Exception $e) {
             return null;
