@@ -1,10 +1,10 @@
 {
     "name": "siftscience/sift-partner-php",
     "description": "Sift Science Partnership API PHP library",
-    "keywords": ["sift", "sift science", "php", "fraud", "sift science partnerhsip api"],
+    "keywords": ["sift", "sift science", "php", "fraud", "sift science partnership api"],
     "homepage": "https://github.com/SiftScience/sift-partner-php",
     "license": "MIT",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "authors": [
         {
             "name": "Yoav Schatzberg"
